@@ -1,0 +1,92 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "nessus.fullname" . }}
+  labels:
+    {{- include "nessus.labels" . | nindent 4 }}
+spec:
+  {{- if .Values.pvc.enabled }}
+  strategy:
+    type: Recreate
+  {{- end }}
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "nessus.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "nessus.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "nessus.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if or .Values.configmapenv.enabled .Values.secretenv.enabled }}
+          envFrom:
+          {{- end }}
+          {{- if .Values.configmapenv.enabled }}
+            - configMapRef:
+                name: {{ include "nessus.fullname" . }}
+          {{- end }}
+          {{- if .Values.secretenv.enabled }}
+            - secretRef:
+                name: {{ include "nessus.fullname" . }}  
+          {{- end }}
+          {{- if .Values.pvc.enabled }}
+          volumeMounts:
+            - mountPath: "/opt/nessus"
+              name: {{ include "nessus.fullname" . }} 
+          {{- end }}         
+          ports:
+            - name: https
+              containerPort: 8834
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8834
+              scheme: HTTPS
+            initialDelaySeconds: 300
+          readinessProbe:
+            httpGet:
+              path: /
+              port: https
+              scheme: HTTPS
+              
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+      {{- if .Values.pvc.enabled }}
+      volumes:
+        - name: {{ include "nessus.fullname" . }}
+          persistentVolumeClaim:
+            claimName: {{ include "nessus.fullname" . }}
+      {{- end }}

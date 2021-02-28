@@ -1,0 +1,10 @@
+{{- if .Values.configmapenv.enabled }}
+{{- $fullName := include "nessus.fullname" . -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $fullName }}
+data:
+  USERNAME: {{ .Values.configmapenv.username }}
+  AUTO_UPDATE: {{ .Values.configmapenv.autoupdate }}
+{{- end }}

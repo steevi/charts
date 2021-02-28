@@ -1,0 +1,13 @@
+{{- if .Values.pvc.enabled }}
+{{- $fullName := include "nessus.fullname" . -}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ $fullName}}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.pvc.size }}
+{{- end }}
