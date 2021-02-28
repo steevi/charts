@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  nessus:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-02-28T22:53:35.277477253Z"
+    description: A Helm chart for Kubernetes
+    digest: 75e73f63c8dc5233f7a3de2e844caa263fd0b7c9e7598333dccd0e8ed0ffe1c5
+    name: nessus
+    type: application
+    urls:
+    - https://github.com/steevi/charts/releases/download/nessus-0.1.1/nessus-0.1.1.tgz
+    version: 0.1.1
+generated: "2021-02-28T22:53:35.277494451Z"
