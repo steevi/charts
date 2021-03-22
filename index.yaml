@@ -11,4 +11,21 @@ entries:
     urls:
     - https://github.com/steevi/charts/releases/download/nessus-0.1.1/nessus-0.1.1.tgz
     version: 0.1.1
-generated: "2021-02-28T22:53:35.277494451Z"
+  starboard-operator:
+  - apiVersion: v2
+    appVersion: 0.10.0-rc2
+    created: "2021-03-22T11:50:20.522618539Z"
+    description: A Helm chart for starboard-operator.
+    digest: 35c8fe8c9fb0703328413cecf5a21168081e504792f82b9ad0c9cbb1b67123fb
+    keywords:
+    - aquasecurity
+    - starboard
+    - trivy
+    name: starboard-operator
+    sources:
+    - https://github.com/aquasecurity/starboard
+    type: application
+    urls:
+    - https://github.com/steevi/charts/releases/download/starboard-operator-0.4.2/starboard-operator-0.4.2.tgz
+    version: 0.4.2
+generated: "2021-03-22T11:50:20.52262434Z"
