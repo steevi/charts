@@ -1,5 +1,20 @@
 apiVersion: v1
 entries:
+  istio-operator:
+  - apiVersion: v1
+    created: "2021-07-03T14:27:23.285695577Z"
+    description: Helm chart for deploying Istio operator
+    digest: 3adfb2749a55c29e9f3a5561757d2fa05c9354bf625bb818f77cef4bf7ea2799
+    icon: https://istio.io/latest/favicons/android-192x192.png
+    keywords:
+    - istio
+    - operator
+    name: istio-operator
+    sources:
+    - https://github.com/istio/istio/tree/master/operator
+    urls:
+    - https://github.com/steevi/charts/releases/download/istio-operator-1.7.0/istio-operator-1.7.0.tgz
+    version: 1.7.0
   nessus:
   - apiVersion: v2
     appVersion: 1.16.0
@@ -28,4 +43,4 @@ entries:
     urls:
     - https://github.com/steevi/charts/releases/download/starboard-operator-0.4.2/starboard-operator-0.4.2.tgz
     version: 0.4.2
-generated: "2021-03-22T11:50:20.52262434Z"
+generated: "2021-07-03T14:27:23.285700777Z"
